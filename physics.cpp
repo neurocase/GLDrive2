@@ -13,7 +13,7 @@ Physics::Physics()
 {
 }
 
-void Physics::CalcPhys(double rot, double &px, double &py, double &velx, double &vely, bool throttle, bool isbrake, bool ishbrake)
+void Physics::CalcPhys(double rot, int rotdir, double &px, double &py, double &velx, double &vely, bool throttle, bool isbrake, bool ishbrake)
 {
 
 
@@ -23,16 +23,7 @@ void Physics::CalcPhys(double rot, double &px, double &py, double &velx, double 
 	
 ///	rot = rot * (180/PI);
 
-if (throttle == true){/*
-  engineforce =1;
-}else{
-  engineforce =0;
-}
-py = engineforce * cos(rot) + 1;
-px = engineforce * sin(rot) + 1; 
-px = -px;
-}*/
-
+if (throttle == true){
 
 
 	//first gear
@@ -89,8 +80,8 @@ if (totVel > 0 || engineforce > 0)
 		} 
 	engineforce = -3;
 
-	}/*
-switch(r){
+	}
+switch(rotdir){
 	case -1:
 		rot -= incT;
 		break;
@@ -99,7 +90,7 @@ switch(r){
 		break;
 	default:
 		break;
-} */
+} 
 }
 double thickness = 6;
 	

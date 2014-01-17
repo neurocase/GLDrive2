@@ -14,6 +14,7 @@ class Player{
 	~Player();
 	
 	int texid;
+	int rotdir;
 	
 	double xpos;
 	double ypos;

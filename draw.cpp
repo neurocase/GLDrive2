@@ -39,7 +39,9 @@ unsigned int Draw::LoadTexture(const char* filename)
 void Draw::RaceCar(double rot, double x, double y, unsigned int id)
 {
 
+  
 
+  
   rot = rot * (PI/180);
 
   

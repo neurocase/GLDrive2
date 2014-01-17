@@ -8,7 +8,7 @@ class Physics{
   Physics();
   ~Physics();
   
-  void CalcPhys(double rot, double &px, double &py, double &velx, double &vely, bool throttle, bool isbrake, bool ishbrake);
+  void CalcPhys(double rot, int rotdir, double &px, double &py, double &velx, double &vely, bool throttle, bool isbrake, bool ishbrake);
 
 
 };
