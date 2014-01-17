@@ -1,0 +1,36 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+
+class Player{
+	
+	private:
+	
+	
+	
+	public:
+	
+	Player();
+	~Player();
+	
+	int texid;
+	
+	float xpos;
+	float ypos;
+	float width;
+	float height;
+	float rot;
+	float accel;
+	float velx;
+	float vely;
+	
+	bool throttle;
+	bool brake;
+	bool hbrake;
+	
+	
+	};
+
+
+
+#endif
