@@ -24,6 +24,7 @@ class Player{
 	double accel;
 	double velx;
 	double vely;
+	double viewspeeddist;
 	
 	bool throttle;
 	bool brake;

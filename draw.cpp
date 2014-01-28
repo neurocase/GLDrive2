@@ -2,6 +2,8 @@
 #include "include.h"
 #include "draw.h"
 
+using namespace std;
+
 Draw::Draw()
 {
   loadedtex=0;
@@ -125,6 +127,103 @@ void Draw::TrafficCone(double rot, double x, double y, unsigned int id)
 void Draw::RedTri(double, double, double)
 {
 }
+
+
+void Draw::GrnSqr(double rot, double x, double y)
+{
+    double size = 0.5;
+    double sizex = size;    
+  
+  rot = rot * (PI/180);
+
+  
+  double vertxpos[4] = {-size, -size, size,size};
+	double vertypos[4] = {-size, size, size,-size};
+	double tmpvertxpos[4] = {vertxpos[0],vertxpos[1],vertxpos[2],vertxpos[3]};
+	double tmpvertypos[4] = {vertypos[0],vertypos[1],vertypos[2],vertypos[3]};
+		
+	for (int i = 0; i < 4; i++){
+		vertxpos[i] = tmpvertxpos[i]*cos(rot)-tmpvertypos[i]*sin(rot);
+		vertypos[i] = tmpvertxpos[i]*sin(rot)+tmpvertypos[i]*cos(rot);
+		
+	}
+	
+	glColor3f(1,1,1);
+	
+	  glBindTexture(GL_TEXTURE_2D,NULL);
+	  glColor3f(0,1,0.3);
+	
+	glBegin(GL_QUADS);  
+	    glTexCoord2f(1.0,0.0);
+        glVertex3f(x+vertxpos[0], y+vertypos[0], -10.0); //point A
+         glTexCoord2f(0.0,0.0);
+        glVertex3f(x+vertxpos[1], y+vertypos[1], -10.0); //point B
+            glTexCoord2f(0.0,1.0);
+        glVertex3f(x+vertxpos[2], y+vertypos[2], -10.0); //point C
+            glTexCoord2f(1.0,1.0);
+        glVertex3f(x+vertxpos[3], y+vertypos[3], -10.0); //point C
+  glEnd();
+
+
+}
+
+/*
+".	c #FFFFFF",
+"+	c #000000",
+"@	c #00FFFF",
+"#	c #0000FF",
+*/
+
+
+void Draw::XpmMap(char **newmap, int length)
+{
+
+string tempw;
+string temph;
+int mapwidth = 0;
+int mapheight = 0;
+int colours = 0;
+int startat = 0;
+
+int i = 0;
+while(mapwidth == 0){
+  tempw[i] = newmap[0][i];
+    if (newmap[0][i] == ' ')  mapwidth = atoi(tempw.c_str());
+  i++;  
+}
+int j = 0;
+while(mapheight == 0){
+    if (newmap[0][i] == ' '){  mapheight = atoi(temph.c_str()); break;}
+    temph[j] = newmap[0][i];
+    j++;
+    i++;  
+}
+i++;
+static char *ccol = &newmap[0][i];
+colours = atoi(ccol);
+
+string checkcol;
+checkcol = newmap[0][i+1];
+cout << "::" << *newmap << ": Map Loaded ::" << endl;
+if (checkcol != " "){ cout << endl << "too many colours, there may be errors" << endl;}
+cout << " Width: " << mapwidth;
+cout << " Height: " << mapheight;
+cout << " Colours: " << colours << endl;
+
+for (int i =colours+1; i < mapheight+colours+1; i++)
+{// cout << newmap[i] << endl;
+  for (int j =0; j < mapwidth; j++)
+  {
+    if (newmap[i][j] != ' ' ){
+    this->GrnSqr(0, i, j);
+    
+    }
+  }
+}
+}
+
+
+
 	
 Draw::~Draw()
 {

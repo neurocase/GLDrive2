@@ -6,3 +6,9 @@
 #include <cmath>
 #include <unistd.h>
 #include <vector>
+
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <stdlib.h>
+#include "maptest.xpm"

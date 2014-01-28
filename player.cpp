@@ -15,6 +15,7 @@ Player::Player(){
 	accel = 0;
   velx = 0;
 	vely = 0;
+	viewspeeddist=0;
 	
 	throttle = false;
   brake = false;

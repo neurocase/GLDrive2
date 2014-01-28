@@ -18,7 +18,8 @@ class Draw{
 	void RaceCar(double, double, double, unsigned int);
 	void TrafficCone(double, double, double, unsigned int);
 	void RedTri(double, double, double);
-	
+	void XpmMap(char **newmap, int length);
+	void GrnSqr(double rot, double x, double y);
 	
 	~Draw();
 	
