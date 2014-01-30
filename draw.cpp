@@ -11,7 +11,44 @@ Draw::Draw()
 }
 
 bool texLoaded = 0;
-const double PI = 3.141592653589793;
+//const double PI = 3.141592653589793;
+
+
+
+void Draw::RenderText(const TTF_Font *Font, const GLubyte& R, const GLubyte& G, const GLubyte& B,
+                const double& X, const double& Y, const double& Z,  const std::string& Text)
+{
+	/*Create some variables.*/
+	SDL_Color Color = {R, G, B};
+	SDL_Surface *Message = TTF_RenderText_Blended(const_cast<TTF_Font*>(Font), Text.c_str(), Color);
+	unsigned Texture = 0;
+ 
+	/*Generate an OpenGL 2D texture from the SDL_Surface*.*/
+	glGenTextures(1, &Texture);
+	glBindTexture(GL_TEXTURE_2D, Texture);
+ 
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+ 
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Message->w, Message->h, 0, GL_BGRA,
+	             GL_UNSIGNED_BYTE, Message->pixels);
+ 
+	/*Draw this texture on a quad with the given xyz coordinates.*/
+	glBegin(GL_QUADS);
+		glTexCoord2d(0, 1); glVertex3d(X, Y, Z);
+		glTexCoord2d(1, 1); glVertex3d(X+(Message->w/3), Y, Z);
+		glTexCoord2d(1, 0); glVertex3d(X+(Message->w/3), Y+(Message->h/3), Z);
+		glTexCoord2d(0, 0); glVertex3d(X, Y+(Message->h/3), Z);
+	glEnd();
+ 
+	/*Clean up.*/
+	glDeleteTextures(1, &Texture);
+	SDL_FreeSurface(Message);
+}
+
+
+
+
 
 unsigned int Draw::LoadTexture(const char* filename)
 {
@@ -204,11 +241,8 @@ colours = atoi(ccol);
 
 string checkcol;
 checkcol = newmap[0][i+1];
-cout << "::" << *newmap << ": Map Loaded ::" << endl;
-if (checkcol != " "){ cout << endl << "too many colours, there may be errors" << endl;}
-cout << " Width: " << mapwidth;
-cout << " Height: " << mapheight;
-cout << " Colours: " << colours << endl;
+
+//if (checkcol != " "){ cout << endl << "too many colours, there may be errors" << endl;}
 
 for (int i =colours+1; i < mapheight+colours+1; i++)
 {// cout << newmap[i] << endl;

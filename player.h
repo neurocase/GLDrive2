@@ -16,6 +16,8 @@ class Player{
 	int texid;
 	int rotdir;
 	
+	
+	double engineforce;
 	double xpos;
 	double ypos;
 	double width;
@@ -24,6 +26,7 @@ class Player{
 	double accel;
 	double velx;
 	double vely;
+	double totvel;
 	double viewspeeddist;
 	
 	bool throttle;

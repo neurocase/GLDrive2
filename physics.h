@@ -1,6 +1,8 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include "player.h"
+
 class Physics{
   
   public:
@@ -8,7 +10,7 @@ class Physics{
   Physics();
   ~Physics();
   
-  void CalcPhys(double &degrot, int rotdir, double &px, double &py, double &velx, double &vely, bool throttle, bool isbrake, bool ishbrake,double &engineforcereturn, char **newmap, int maplength);
+  void CalcPhys(Player &Player, char **newmap, int maplength);
 
 
 };
