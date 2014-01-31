@@ -1,5 +1,6 @@
 #include "include.h"
 #include "physics.h"
+#include "level.h"
 #include "degrad.cpp"
 
 
@@ -18,7 +19,7 @@ Physics::Physics()
 //void Physics::CalcPhys(double &degrot, int rotdir, double &px, double &py, double &velx, double &vely, bool throttle, bool isbrake, bool ishbrake, double &viewspeeddist, char **newmap, int maplength)
 //  PhysEn.CalcPhys(PlayerOne.rot,PlayerOne.rotdir, PlayerOne.xpos, PlayerOne.ypos, PlayerOne.velx, PlayerOne.vely, PlayerOne.throttle, PlayerOne.brake, PlayerOne.hbrake, PlayerOne.viewspeeddist, maptest_xpm, maptestlength);
 
-void Physics::CalcPhys(Player &Player, char **newmap, int maplength)
+void Physics::CalcPhys(Player &Player, Level &MyLevel)
 {
 
 
@@ -75,7 +76,7 @@ if (std::abs(Player.totvel) < 0.5){
 
 if (Player.totvel > 0 && Player.engineforce > 0)
 {
-	double turnval = 0.055;
+	double turnval = 0.04;
 	
 
 	//	turnval = turnval * Player.totvel * 0.2;
@@ -84,10 +85,10 @@ if (Player.totvel > 0 && Player.engineforce > 0)
 	
 	//times turning by total velocity for handbrake effect
 	if (Player.hbrake){
-		if (Player.totvel > 8 ){
-		turnval = turnval * (Player.totvel * 0.020);
+//		if (Player.totvel > 8 ){
+		turnval = 0.07;
 		//std::cout << "turnval * " << (Player.totvel * 0.015) << "   " << std::endl;
-		}
+	//	}
 	}
 	
     switch(Player.rotdir){
@@ -138,13 +139,13 @@ int cy = (int)Player.ypos;
 
 // program is crashing when car goes off map
 
-if (newmap[cx][cy] == ' '){
+if (MyLevel.getGridChar(cx,cy) == ' '){
 //Player.velx = Player.velx /2;
 //Player.vely = Player.vely /2;
 if (Player.engineforce > 18){
-  Player.engineforce -= 2;
+  Player.engineforce -= 4;
   if (Player.engineforce > 26){
-  Player.engineforce = Player.engineforce -6;
+  Player.engineforce = Player.engineforce -12;
   }
 }
 }
@@ -152,14 +153,18 @@ if (Player.engineforce > 18){
 //for (int ccx = -4; ccx < 4; ccx++){    
 //  for (int ccy = -4; ccy < 4; ccy++){
 //    if (ccx + cx < 32 && ccy +cy < 32){
-      if (newmap[cx][cy] == '+'){
-        std::cout << "CHECKPOINT!";
+char val = MyLevel.getGridChar(cx,cy);
+if (val == '+'){
+  std::cout << "CHECKPOINT!";
+}
+      //if (newmap[cx][cy] == '+'){
+       // std::cout << "CHECKPOINT!";
   //        newmap[cx+ccx][cy+ccy] = 'a';
           
   //    }
   //  }
  // }
-}
+
 
 Player.xpos = Player.xpos + deltaT * Player.velx + dt2 * accelX;
 Player.velx = Player.velx + deltaT * accelX;

@@ -14,7 +14,7 @@ Draw DrawEn;
 Physics PhysEn;
 
 int maptestlength = (sizeof(maptest_xpm)/sizeof(*maptest_xpm));
-Level MyLevel(maptest_xpm, maptestlength);
+Level MyLevel(maptest_xpm, maptestlength,PlayerOne.xpos,PlayerOne.ypos);
 
 struct playerstart{
   int x = 0;
@@ -139,8 +139,7 @@ void display()
   
   if (!started){
   MyLevel.getPlayerStart(ps.x,ps.y);
-  PlayerOne.xpos = ps.x;
-  PlayerOne.ypos = ps.y;
+
   
   cout << "x" << ps.x <<" y" << ps.y;
   started = true;
@@ -166,7 +165,7 @@ void display()
 
  /* PhysEn.CalcPhys(PlayerOne.rot,PlayerOne.rotdir, PlayerOne.xpos, PlayerOne.ypos, PlayerOne.velx, PlayerOne.vely, PlayerOne.throttle, PlayerOne.brake, PlayerOne.hbrake, PlayerOne.viewspeeddist, maptest_xpm, maptestlength);*/
  
-  PhysEn.CalcPhys(PlayerOne, maptest_xpm, maptestlength);
+  PhysEn.CalcPhys(PlayerOne, MyLevel);
  
  
   DrawEn.RaceCar(PlayerOne.rot,PlayerOne.xpos,PlayerOne.ypos, RaceTrack.playercar.texid);

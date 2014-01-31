@@ -1,6 +1,7 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include "level.h"
 #include "player.h"
 
 class Physics{
@@ -10,7 +11,7 @@ class Physics{
   Physics();
   ~Physics();
   
-  void CalcPhys(Player &Player, char **newmap, int maplength);
+  void CalcPhys(Player &Player, Level &MyLevel);
 
 
 };

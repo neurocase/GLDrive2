@@ -16,11 +16,13 @@ class Level{
   
   public:
   
-  
- 
+  int lheight;
+  int lwidth;
   int checkpoints;
-  
-  Level(char **newmap, int length);
+  int arraylength;
+  char **thismap;
+  Level(char **newmap, int length, double& playsx, double& playsy);
+  char getGridChar(int,int);
   void getPlayerStart(int&,int&);
   void getDimensions(int&,int&);
   ~Level();

@@ -16,14 +16,14 @@ struct Playerstart{
 Dim dim;
 Playerstart playerstart;
 
-Level::Level(char **newmap, int length){
+Level::Level(char **newmap, int length, double& playsx, double& playsy){
 
 
+arraylength = length;
 
 
 std::string tempw;
 std::string temph;
-
 
 
 
@@ -74,8 +74,30 @@ for (int i =colours+1; i < dim.height+colours+1; i++)
 std::cout <<  **newmap << ": Map Loaded :" << std::endl;
 std::cout << "Dim :: Width:" << dim.width << " Height:" << dim.height << " Colours:" << colours << std::endl;
 std::cout << "Player Start: X:" << playerstart.x << " Y:" << playerstart.y << std::endl;
+playsx = playerstart.x;
+playsy = playerstart.y;
+
+lwidth = dim.width;
+lheight = dim.height;
+
+
+thismap = newmap;
 
 }
+
+char Level::getGridChar(int x, int y){
+
+//std::cout << ":" << ;//thismap[20][20];
+//if (x > 0 && x < dim.width){
+ // if (y > 0 && y < dim.height){
+  // char c = thismap[10][10];
+  //    return c;
+ // }else{
+  //return ' ';
+ // }
+}
+
+
 
 void Level::getPlayerStart(int& x,int& y){
 x = playerstart.x;
