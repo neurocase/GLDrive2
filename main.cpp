@@ -40,6 +40,7 @@ int playerstarty = 0;
 
 double laptime = 0;
 double previouslaps = 0;
+double bestlap = 999;
 
 
 int checkpoints = 0;
@@ -57,8 +58,8 @@ void reportstatus(){
   if(6500.0<SDL_GetTicks()-tickstatus)
     {
       tickstatus =SDL_GetTicks();
-      std::cout << "    PLAYERONE: X:" << PlayerOne.xpos << " Y:" << PlayerOne.ypos << " ViewDistance:" << PlayerOne.viewspeeddist << std::endl;
-      std::cout <<" PLAYERONE: ROT:"<< PlayerOne.rot << "ENGINEFORCE:" << PlayerOne.engineforce << std::endl;
+      //std::cout << "    PLAYERONE: X:" << PlayerOne.xpos << " Y:" << PlayerOne.ypos << " ViewDistance:" << PlayerOne.viewspeeddist << std::endl;
+      //std::cout <<" PLAYERONE: ROT:"<< PlayerOne.rot << "ENGINEFORCE:" << PlayerOne.engineforce << std::endl;
 		}
 }
 void init()
@@ -169,7 +170,8 @@ void display()
 				int a = MyLevel.getCheckpointId(cx+ccx,cy+ccy);
 				if (a == 99){
 					previouslaps += laptime;
-					std::cout << std::endl<<":::: LAPTIME :"<< laptime << " Seconds ::::" << std::endl;
+					if (laptime < bestlap){ bestlap = laptime; }
+					std::cout << std::endl<<":::: LAPTIME:"<< laptime << " Seconds :: Bestlap: " << bestlap << " ::::" << std::endl;
 					MyLevel.resetFlags();
 					laptime = 0;
 				}

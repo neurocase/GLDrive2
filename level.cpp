@@ -139,7 +139,7 @@ int Level::getCheckpointId(int x, int y){
   for(int i = 0; i < checkpointvec.size(); i++){
     if (checkpointvec[i].x == x && checkpointvec[i].y == y){
 			if (!checkpointvec[i].flag){
-		  	std::cout << std::endl << "checkpoint " << i << ", " << flaggedpoints << " found" << std::endl;
+		  	std::cout << "," << "checkpoint " << i << ", " << flaggedpoints << " found" << ",";
 				checkpointvec[i].flag = true;
 				flaggedpoints++;
 			}
