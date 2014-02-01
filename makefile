@@ -1,4 +1,4 @@
-CC=g++
+CC=echo ":::!BUILDING!:::" && g++
 CFLAGS=-g -c -w -Wall 
 HEADERS=main.h player.h draw.h scene.h physics.h level.h
 SOURCES=main.cpp player.cpp draw.cpp scene.cpp physics.cpp level.cpp

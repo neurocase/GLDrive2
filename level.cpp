@@ -1,6 +1,6 @@
 #include "include.h"
 #include "level.h"
-
+#include <vector>
 
 using namespace std;
 
@@ -13,25 +13,37 @@ struct Playerstart{
   int x = 0;
   int y = 0;
 };
+
+
+struct Checkpoint{
+int x = 0;
+int y = 0;
+int id;
+bool flag = false;
+};
+
+vector <Checkpoint> checkpointvec;
+vector <Checkpoint> checkpointout;
+
 Dim dim;
 Playerstart playerstart;
 
+
+char **thismap;
 Level::Level(char **newmap, int length, double& playsx, double& playsy){
 
 
 arraylength = length;
 
-
 std::string tempw;
 std::string temph;
-
-
 
 //dim.width = 0;
 //dim.height = 0;
 checkpoints = 0;
 int colours = 0;
 int startat = 0;
+int flaggedpoints = 0;
 
 
 int i = 0;
@@ -62,10 +74,17 @@ for (int i =colours+1; i < dim.height+colours+1; i++)
   for (int j =0; j < dim.width; j++)
   {
     if (newmap[i][j] == '+' ){
+  //  std::cout << "FUCKING CUNT" << std::endl;
+    checkpointvec.push_back(Checkpoint());
+    checkpointvec[checkpoints].x = i;
+    checkpointvec[checkpoints].y = j;
+    checkpointvec[checkpoints].flag = false;
+    checkpointvec[checkpoints].id = checkpoints;
+   // std::cout << "," << checkpointvec.size();
     checkpoints++;
     playerstart.x = i;
     playerstart.y = j;
-    
+
     }
   }
 }
@@ -74,28 +93,77 @@ for (int i =colours+1; i < dim.height+colours+1; i++)
 std::cout <<  **newmap << ": Map Loaded :" << std::endl;
 std::cout << "Dim :: Width:" << dim.width << " Height:" << dim.height << " Colours:" << colours << std::endl;
 std::cout << "Player Start: X:" << playerstart.x << " Y:" << playerstart.y << std::endl;
+std::cout << "Checkpoints :" << checkpoints << std::endl;
 playsx = playerstart.x;
 playsy = playerstart.y;
 
-lwidth = dim.width;
-lheight = dim.height;
+//lwidth = dim.width;
+//lheight = dim.height;
 
 
 thismap = newmap;
-
 }
+
+
+bool Level::lapCheck(){
+	int size = checkpointvec.size();
+	if (flaggedpoints >= (size/2)){
+		std::cout << "newlap!" << std::endl;
+		return true;
+		}else{
+	return false;
+	}
+}
+
+void Level::resetFlags(){
+std::cout << "reseting flags" << std::endl;
+  for(int i = 0; i < checkpointvec.size(); i++){
+				checkpointvec[i].flag = false;
+				std::cout << "checkpoint " << i << ":" << checkpointvec[i].flag;
+				flaggedpoints = 0;
+			}
+	std::cout << "flaggedpoints =" << flaggedpoints << std::endl;
+}
+
+int Level::getCheckpointId(int x, int y){
+//std::cout << "checkpointvec.size()" << checkpointvec.size() << std::endl;
+//    std::cout << "," << checkpointout.size();
+		if (x == playerstart.x && y == playerstart.y){
+				if (lapCheck()){			
+			std::cout << "@start:"<< playerstart.x << "," << playerstart.y << " lapcheck:" << lapCheck() << std::endl; 
+			std::cout << ":::::RETURNING 99:::::" << std::endl;
+			return 99;
+			}
+		}
+		
+  for(int i = 0; i < checkpointvec.size(); i++){
+    if (checkpointvec[i].x == x && checkpointvec[i].y == y){
+			if (!checkpointvec[i].flag){
+		  	std::cout << std::endl << "checkpoint " << i << ", " << flaggedpoints << " found" << std::endl;
+				checkpointvec[i].flag = true;
+				flaggedpoints++;
+			}
+    return i;
+    }
+  }
+}
+
+
 
 char Level::getGridChar(int x, int y){
-
 //std::cout << ":" << ;//thismap[20][20];
-//if (x > 0 && x < dim.width){
- // if (y > 0 && y < dim.height){
-  // char c = thismap[10][10];
-  //    return c;
- // }else{
-  //return ' ';
- // }
+  if (x > 0 && x < dim.width){
+    if (y > 0 && y < dim.height){
+     char c = thismap[x][y];
+        return c;
+    }else{
+    return ' ';
+    }
 }
+}
+
+//void Level::tickCheckpoints(int id){
+//}
 
 
 

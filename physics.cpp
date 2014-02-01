@@ -140,30 +140,13 @@ int cy = (int)Player.ypos;
 // program is crashing when car goes off map
 
 if (MyLevel.getGridChar(cx,cy) == ' '){
-//Player.velx = Player.velx /2;
-//Player.vely = Player.vely /2;
-if (Player.engineforce > 18){
-  Player.engineforce -= 4;
-  if (Player.engineforce > 26){
-  Player.engineforce = Player.engineforce -12;
-  }
+	if (Player.engineforce > 18){
+		Player.engineforce -= 4;
+		if (Player.engineforce > 26){
+		Player.engineforce = Player.engineforce -12;
+		}
+	}
 }
-}
-// Check for check points and 
-//for (int ccx = -4; ccx < 4; ccx++){    
-//  for (int ccy = -4; ccy < 4; ccy++){
-//    if (ccx + cx < 32 && ccy +cy < 32){
-char val = MyLevel.getGridChar(cx,cy);
-if (val == '+'){
-  std::cout << "CHECKPOINT!";
-}
-      //if (newmap[cx][cy] == '+'){
-       // std::cout << "CHECKPOINT!";
-  //        newmap[cx+ccx][cy+ccy] = 'a';
-          
-  //    }
-  //  }
- // }
 
 
 Player.xpos = Player.xpos + deltaT * Player.velx + dt2 * accelX;
@@ -172,16 +155,11 @@ Player.velx = Player.velx + deltaT * accelX;
 Player.ypos = Player.ypos + deltaT * Player.vely + dt2 * accelY;
 Player.vely = Player.vely + deltaT * accelY;
 
-
-
 //if (Player.viewspeeddist > 30){ Player.viewspeeddist = 30;}else{
 Player.viewspeeddist = Player.totvel;
 
 
 Player.rot = RadToDeg(radrot);
-
-
-
 
 }
 

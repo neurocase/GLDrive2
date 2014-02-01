@@ -38,6 +38,9 @@ Uint32 tickstatus = 0;
 int playerstartx = 0;
 int playerstarty = 0;
 
+double laptime = 0;
+double previouslaps = 0;
+
 
 int checkpoints = 0;
 
@@ -46,53 +49,6 @@ int checkpoints = 0;
 bool turnLeft = false;
 bool turnRight = false;
 double accel = 0;
-/*
-void lookforplayerstart(char **newmap, int length){
-
-string tempw;
-string temph;
-int mapwidth = 0;
-int mapheight = 0;
-int colours = 0;
-int startat = 0;
-
-int i = 0;
-while(mapwidth == 0){
-  tempw[i] = newmap[0][i];
-    if (newmap[0][i] == ' ')  mapwidth = atoi(tempw.c_str());
-  i++;  
-}
-int j = 0;
-while(mapheight == 0){
-    if (newmap[0][i] == ' '){  mapheight = atoi(temph.c_str()); break;}
-    temph[j] = newmap[0][i];
-    j++;
-    i++;  
-}
-i++;
-static char *ccol = &newmap[0][i];
-colours = atoi(ccol);
-
-string checkcol;
-checkcol = newmap[0][i+1];
-
-
-  if (checkcol != " "){ cout << endl << "too many colours, there may be errors" << endl;}
- 
-for (int i =colours+1; i < mapheight+colours+1; i++)
-{// cout << newmap[i] << endl;
-  for (int j =0; j < mapwidth; j++)
-  {
-    if (newmap[i][j] == '+' ){
-    checkpoints++;
-    PlayerOne.xpos = i;
-    PlayerOne.ypos = j;
-    
-    }
-  }
-}*/
-
-//}
 
 void reportstatus(){
   int aaa = SDL_GetTicks();
@@ -176,7 +132,9 @@ void display()
     //string texta =  PlayerOne.engineforce;
     
     std::ostringstream efstrs;
-    efstrs << (int)(SDL_GetTicks()/1000) << "." << (SDL_GetTicks()/100 - SDL_GetTicks()/1000*10) ;
+
+		laptime = (int)(SDL_GetTicks()/1000) + ((SDL_GetTicks()/100 - SDL_GetTicks()/1000*10) * 0.1) - previouslaps;
+    efstrs <<  laptime;
     std::string texta = efstrs.str();
     
   DrawEn.RenderText(font,255,255,100 ,PlayerOne.xpos-15,PlayerOne.ypos+10,-10,texta);
@@ -199,8 +157,30 @@ void display()
     {
       PlayerOne.rot+=360.0;
     }
-    
-    
+
+
+	int cx = (int)PlayerOne.xpos;
+	int cy = (int)PlayerOne.ypos;
+	// Check for check points and 
+	for (int ccx = -7; ccx < 7; ccx++){    
+		for (int ccy = -7; ccy < 7; ccy++){
+			char val = MyLevel.getGridChar(cx+ccx,cy+ccy);
+			if (val == '+'){
+				int x = cx+ccx;
+				int y = cy+ccy;
+				int a = MyLevel.getCheckpointId(cx+ccx,cy+ccy);
+				if (a == 99){
+					previouslaps += laptime;
+					std::cout << std::endl<<":::: LAPTIME :"<< (int)(SDL_GetTicks()/1000) << "." << laptime << " ::::" << std::endl;
+					MyLevel.resetFlags();
+					laptime = 0;
+				}
+
+				 //  std::cout << cx+ccx << "," << cy+ccy << "CHECKPOINT:" << a << std::endl;
+					 //SEARCH FOR CHECKPOINT
+				}
+			}
+	}
 }
 
 

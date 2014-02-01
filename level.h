@@ -1,6 +1,9 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+
+#include <vector>
+
 class Level{
 
   private:
@@ -13,15 +16,30 @@ class Level{
   int x = 0;
   int y = 0;
   };
+
+	struct Checkpoint{
+	int x = 0;
+	int y = 0;
+	int id;
+	bool flag;
+	};
   
   public:
   
-  int lheight;
-  int lwidth;
+	Dim dim;
+	Playerstart playerstart;
+	std::vector <Checkpoint> checkpointvec;
+	
+//  int lheight;
+ // int lwidth;
   int checkpoints;
   int arraylength;
-  char **thismap;
+	int flaggedpoints;
+
   Level(char **newmap, int length, double& playsx, double& playsy);
+	void resetFlags();
+	bool lapCheck();
+  int getCheckpointId(int x, int y);
   char getGridChar(int,int);
   void getPlayerStart(int&,int&);
   void getDimensions(int&,int&);

@@ -248,7 +248,7 @@ for (int i =colours+1; i < mapheight+colours+1; i++)
 {// cout << newmap[i] << endl;
   for (int j =0; j < mapwidth; j++)
   {
-    if (newmap[i][j] != ' ' ){
+    if (newmap[i][j] == '.' ){
     this->GrnSqr(0, i, j);
     
     }
