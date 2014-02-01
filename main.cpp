@@ -149,12 +149,10 @@ void display()
 
     DrawEn.XpmMap(maptest_xpm, maptestlength);
     
-    if(PlayerOne.rot>360.0)
-    {
+    if(PlayerOne.rot>360.0){
       PlayerOne.rot-=360.0;
     }
-    if(PlayerOne.rot<-360.0)
-    {
+    if(PlayerOne.rot<-360.0){
       PlayerOne.rot+=360.0;
     }
 
@@ -171,19 +169,14 @@ void display()
 				int a = MyLevel.getCheckpointId(cx+ccx,cy+ccy);
 				if (a == 99){
 					previouslaps += laptime;
-					std::cout << std::endl<<":::: LAPTIME :"<< (int)(SDL_GetTicks()/1000) << "." << laptime << " ::::" << std::endl;
+					std::cout << std::endl<<":::: LAPTIME :"<< laptime << " Seconds ::::" << std::endl;
 					MyLevel.resetFlags();
 					laptime = 0;
 				}
-
-				 //  std::cout << cx+ccx << "," << cy+ccy << "CHECKPOINT:" << a << std::endl;
-					 //SEARCH FOR CHECKPOINT
-				}
 			}
+		}
 	}
 }
-
-
 
 int main()
 {
